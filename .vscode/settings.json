@@ -1,0 +1,40 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  },
+  "hide-files.files": [],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontFamily": "'JetBrainsMono Nerd Font'",
+  "editor.formatOnSave": true,
+  "editor.detectIndentation": true,
+  "editor.wordWrap": "on",
+  "editor.fontSize": 14,
+  "editor.tabSize": 2,
+  "editor.linkedEditing": true,
+  "editor.stickyScroll.enabled": true,
+  "explorer.compactFolders": false,
+  "editor.mouseWheelZoom": true,
+  "editor.formatOnPaste": true,
+  "editor.autoClosingBrackets": "always",
+  "editor.autoClosingComments": "always",
+  "editor.autoClosingQuotes": "always",
+  "editor.autoIndentOnPaste": true,
+  "explorer.sortOrder": "type",
+  "files.autoSave": "onWindowChange",
+  "terminal.integrated.env.windows": {},
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+  "terminal.integrated.suggest.cdPath": "relative",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "args": ["-noLogo"]
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.shellIntegration.enabled": false,
+  "git.autorefresh": true
+}
