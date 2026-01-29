@@ -36,5 +36,6 @@
   },
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "terminal.integrated.shellIntegration.enabled": false,
-  "git.autorefresh": true
+  "git.autorefresh": true,
+  "postman.settings.dotenv-detection-notification-visibility": false
 }
