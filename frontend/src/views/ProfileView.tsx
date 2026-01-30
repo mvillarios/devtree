@@ -3,7 +3,7 @@ import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import ErrorMessage from "../components/ErrorMessage";
 import type { ProfileForm, User } from "../types";
-import { updateProfile } from "../api/DevTreeApi";
+import { updateProfile, uploadImage } from "../api/DevTreeApi";
 
 export default function ProfileView() {
   const queryClient = useQueryClient();
@@ -30,6 +30,24 @@ export default function ProfileView() {
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
+
+  const uploadImageMutation = useMutation({
+    mutationFn: uploadImage,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(["user"], (prevData: User) => {
+        return { ...prevData, image: data };
+      });
+    },
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      uploadImageMutation.mutate(e.target.files[0]);
+    }
+  };
 
   const handleUserProfileForm = (formData: ProfileForm) => {
     updateProfileMutation.mutate(formData);
@@ -80,7 +98,7 @@ export default function ProfileView() {
           name="handle"
           className="p-2 border-none rounded-lg bg-slate-100"
           accept="image/*"
-          onChange={() => {}}
+          onChange={handleChange}
         />
       </div>
 
