@@ -87,13 +87,19 @@ export default function LinkTreeView() {
       updatedItems = links.map((link) => {
         if (link.name === socialNetwork) {
           return { ...link, id: 0, enabled: false };
-        } else if (link.id > indexToUpdate) {
+        } else if (
+          indexToUpdate !== 0 &&
+          link.id === 1 &&
+          link.id > indexToUpdate
+        ) {
           return { ...link, id: link.id - 1 };
         } else {
           return link;
         }
       });
     }
+
+    console.log("Updated Items:", updatedItems);
 
     queryClient.setQueryData(["user"], (prevData: User) => {
       return { ...prevData, links: JSON.stringify(updatedItems) };
@@ -113,7 +119,7 @@ export default function LinkTreeView() {
         ))}
         <button
           className="w-full p-2 text-lg font-bold uppercase rounded bg-cyan-400 text-slate-600"
-          onClick={() => mutate(user)}
+          onClick={() => mutate(queryClient.getQueryData(["user"])!)}
         >
           Guardar Cambios
         </button>
