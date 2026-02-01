@@ -15,8 +15,6 @@ export default function DevTree({ data }: DevTreeProps) {
     [data.links],
   );
 
-  console.log("Enabled Links:", enabledLinks);
-
   return (
     <>
       <header className="py-5 bg-slate-800">
@@ -65,11 +63,11 @@ export default function DevTree({ data }: DevTreeProps) {
                 {data.description}
               </p>
 
-              <p className="flex flex-col gap-5 mt-20">
+              <div className="flex flex-col gap-5 mt-20">
                 {enabledLinks.map((link: SocialNetwork) => (
                   <DevTreeLink key={link.name} link={link} />
                 ))}
-              </p>
+              </div>
             </div>
           </div>
         </main>
