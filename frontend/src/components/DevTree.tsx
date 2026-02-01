@@ -1,13 +1,22 @@
 import { Link, Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
 import NavigationTabs from "../components/NavigationTabs";
-import type { User } from "../types";
+import type { SocialNetwork, User } from "../types";
+import { useMemo } from "react";
+import DevTreeLink from "./DevTreeLink";
 
 type DevTreeProps = {
   data: User;
 };
 
 export default function DevTree({ data }: DevTreeProps) {
+  const enabledLinks = useMemo(
+    () => JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled),
+    [data.links],
+  );
+
+  console.log("Enabled Links:", enabledLinks);
+
   return (
     <>
       <header className="py-5 bg-slate-800">
@@ -54,6 +63,12 @@ export default function DevTree({ data }: DevTreeProps) {
               )}
               <p className="text-lg font-black text-center text-white">
                 {data.description}
+              </p>
+
+              <p className="flex flex-col gap-5 mt-20">
+                {enabledLinks.map((link: SocialNetwork) => (
+                  <DevTreeLink key={link.name} link={link} />
+                ))}
               </p>
             </div>
           </div>
