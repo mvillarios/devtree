@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { isAxiosError } from "axios";
 import { toast } from "sonner";
 import ErrorMessage from "../components/ErrorMessage";
 import type { LoginForm } from "../types";
-import api from "../config/axios";
+import { useMutation } from "@tanstack/react-query";
+import { userLogin } from "../api/DevTreeApi";
 
 export default function LoginView() {
+  const navigate = useNavigate();
+
   const defaultValues: LoginForm = {
     email: "",
     password: "",
@@ -18,15 +20,19 @@ export default function LoginView() {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const handleLogin = async (formData: LoginForm) => {
-    try {
-      const { data } = await api.post(`/auth/login`, formData);
+  const userLoginMutation = useMutation({
+    mutationFn: userLogin,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
       localStorage.setItem("AUTH_TOKEN", data);
-    } catch (error) {
-      if (isAxiosError(error) && error.response) {
-        toast.error(error.response.data.error);
-      }
-    }
+      navigate("/admin");
+    },
+  });
+
+  const handleLogin = (formData: LoginForm) => {
+    userLoginMutation.mutate(formData);
   };
 
   return (

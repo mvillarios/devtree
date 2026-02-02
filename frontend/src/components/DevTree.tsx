@@ -11,6 +11,7 @@ import type { SocialNetwork, User } from "../types";
 import DevTreeLink from "./DevTreeLink";
 import { useState, useEffect, startTransition } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import Header from "./Header";
 
 type DevTreeProps = {
   data: User;
@@ -74,6 +75,7 @@ export default function DevTree({ data }: DevTreeProps) {
 
   return (
     <>
+      <Header />
       <div className="min-h-screen py-10 bg-gray-100">
         <main className="max-w-5xl p-10 mx-auto md:p-0">
           <NavigationTabs />

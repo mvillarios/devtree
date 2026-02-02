@@ -1,10 +1,31 @@
 import { isAxiosError } from "axios";
 import api from "../config/axios";
-import type { User, UserHandle } from "../types";
+import type { LoginForm, RegisterForm, User, UserHandle } from "../types";
 
 export async function getUser() {
   try {
     const { data } = await api<User>("/user");
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+export async function userRegister(formData: RegisterForm) {
+  try {
+    const { data } = await api.post(`/auth/register`, formData);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function userLogin(formData: LoginForm) {
+  try {
+    const { data } = await api.post(`/auth/login`, formData);
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -30,7 +51,7 @@ export async function uploadImage(file: File) {
   try {
     const {
       data: { image },
-    }: { data: { image: string } } = await api.post("user/image", formData);
+    }: { data: { image: string } } = await api.post("/user/image", formData);
     return image;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -42,6 +63,17 @@ export async function uploadImage(file: File) {
 export async function getUserByHandle(handle: string) {
   try {
     const { data } = await api.get<UserHandle>(`/${handle}`);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function searchByHandle(handle: string) {
+  try {
+    const { data } = await api.post<string>("/search", { handle });
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
