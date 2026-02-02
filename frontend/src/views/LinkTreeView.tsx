@@ -99,8 +99,6 @@ export default function LinkTreeView() {
       });
     }
 
-    console.log("Updated Items:", updatedItems);
-
     queryClient.setQueryData(["user"], (prevData: User) => {
       return { ...prevData, links: JSON.stringify(updatedItems) };
     });

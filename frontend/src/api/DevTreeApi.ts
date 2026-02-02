@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import api from "../config/axios";
-import type { ProfileForm, User } from "../types";
+import type { User, UserHandle } from "../types";
 
 export async function getUser() {
   try {
@@ -32,6 +32,17 @@ export async function uploadImage(file: File) {
       data: { image },
     }: { data: { image: string } } = await api.post("user/image", formData);
     return image;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function getUserByHandle(handle: string) {
+  try {
+    const { data } = await api.get<UserHandle>(`/${handle}`);
+    return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);
